@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -24,6 +25,10 @@ func main() {
 	r.GET("/test1", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "test1.html", gin.H{})
 	})
+
+	for range 3 {
+		fmt.Print("n!!!!\n")
+	}
 
 	err := r.Run(":8080")
 	if err != nil {
