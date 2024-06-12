@@ -1,16 +1,33 @@
 package main
 
 import (
+	"embed"
+	"html/template"
 	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
+//go:embed resources/templates/*.html
+var templatesFS embed.FS
+
+//go:embed resources/static/*
+var staticFS embed.FS
+
 func main() {
 	r := gin.Default()
-	r.Static("/static", "../resources/static")
-	r.LoadHTMLGlob("../resources/templates/*.html") //加载templates目录下所有文件
+
+	// 使用 gin 的嵌入式文件系统
+	tmpl := template.Must(template.New("").ParseFS(templatesFS, "resources/templates/*.html"))
+	r.SetHTMLTemplate(tmpl)
+
+	// 使用嵌入的静态文件
+	staticServer := http.FileServer(http.FS(staticFS))
+	r.StaticFS("/static", http.FS(staticFS))
+	r.GET("/static", func(c *gin.Context) {
+		staticServer.ServeHTTP(c.Writer, c.Request)
+	})
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
