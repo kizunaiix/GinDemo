@@ -1,34 +1,17 @@
 package main
 
 import (
-	"embed"
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-//go:embed resources/templates/*.html
-var templatesFS embed.FS
-
-//go:embed resources/static/*
-var staticFS embed.FS
-
 func main() {
 	r := gin.Default()
-
-	// 使用 gin 的嵌入式文件系统
-	tmpl := template.Must(template.New("").ParseFS(templatesFS, "resources/templates/*.html"))
-	r.SetHTMLTemplate(tmpl)
-
-	// 使用嵌入的静态文件
-	staticServer := http.FileServer(http.FS(staticFS))
-	r.StaticFS("/static", http.FS(staticFS))
-	r.GET("/static", func(c *gin.Context) {
-		staticServer.ServeHTTP(c.Writer, c.Request)
-	})
+	r.LoadHTMLGlob("../resources/templates/*.html")
+	r.Static("static", "../resources/static")
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
@@ -44,7 +27,7 @@ func main() {
 	})
 
 	for range 3 {
-		fmt.Print("n!!!!\n")
+		fmt.Print("go 1.22!!!\n")
 	}
 
 	err := r.Run(":8080")
