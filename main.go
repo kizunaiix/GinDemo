@@ -24,11 +24,7 @@ func main() {
 	r.SetHTMLTemplate(tmpl)
 
 	// 使用嵌入的静态文件
-	staticServer := http.FileServer(http.FS(staticFS))
-	r.StaticFS("/static", http.FS(staticFS))
-	r.GET("/static", func(c *gin.Context) {
-		staticServer.ServeHTTP(c.Writer, c.Request)
-	})
+	r.StaticFS("/fs", http.FS(staticFS))
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{})

@@ -16,10 +16,10 @@ function popAlert2() {
 
 /**实现点击saber变chicken，点击chicken变saber*/
 function changeImg2RunningChicken(thisElement) {
-    if (thisElement.getAttribute("src") == "static/img/saber.jpg") {
-        thisElement.src = "static/img/runningChicken.gif";
+    if (thisElement.getAttribute("src") == "fs/resources/static/img/saber.jpg") {
+        thisElement.src = "fs/resources/static/img/runningChicken.gif";
     } else {
-        thisElement.src = "static/img/saber.jpg";
+        thisElement.src = "fs/resources/static/img/saber.jpg";
     }
 }
 
