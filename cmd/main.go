@@ -9,9 +9,6 @@ import (
 )
 
 // 😀🆒🐉👌
-func msss() {
-
-}
 func main() {
 	r := gin.Default()
 	r.LoadHTMLGlob("../resources/templates/*.html")
