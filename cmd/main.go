@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -36,6 +35,7 @@ func main() {
 		c.HTML(http.StatusOK, "test1.html", gin.H{})
 	})
 
+	//post： /api/login
 	r.POST("/api/login", func(ctx *gin.Context) {
 		var request struct {
 			Content string `json:"content"`
@@ -53,11 +53,11 @@ func main() {
 		}
 	})
 
-	for range 3 {
-		fmt.Print("go 1.22!!!\n")
-	}
+	// for range 3 {
+	// 	fmt.Print("go 1.22!!!\n")
+	// }
 
-	err := r.Run(":8000")
+	err := r.Run("0.0.0.0:8080")
 	if err != nil {
 		log.Fatalln(err)
 	}
