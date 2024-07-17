@@ -23,7 +23,7 @@ func main() {
 	r.Static("static", "../resources/static")
 
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{})
+		c.JSON(http.StatusOK, "{hello.WLAN}")
 	})
 	r.GET("/hello", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "hello.html", gin.H{})
@@ -52,10 +52,6 @@ func main() {
 			ctx.JSON(http.StatusOK, gin.H{"content": "who r u?"})
 		}
 	})
-
-	// for range 3 {
-	// 	fmt.Print("go 1.22!!!\n")
-	// }
 
 	err := r.Run("0.0.0.0:8080")
 	if err != nil {
